@@ -5,7 +5,6 @@ const PLCRVoting = artifacts.require('./PLCRVoting.sol');
 const PLCRFactory = artifacts.require('./PLCRFactory.sol');
 
 const utils = require('./utils.js');
-const BN = require('bignumber.js');
 
 contract('PLCRVoting', () => {
   describe('Function: startPoll', () => {
@@ -34,10 +33,10 @@ contract('PLCRVoting', () => {
 
     it('should revert if block timestamp plus provided _commitDuration is greater than 2^256-1', async () => {
       // getting the maximum of uint and storing in maxEVMuint
-      const maxEVMuint = new BN('2').pow('256').minus('1');
+      const maxEVMuint = new web3.utils.BN('2',10).pow(new web3.utils.BN(256)).sub(new web3.utils.BN('1',10));
       const blockTimestamp = await utils.getBlockTimestamp();
       // setting commitDuration to block macEVMuint - blockTimestamp
-      const commitDuration = maxEVMuint.minus(blockTimestamp).plus('1');
+      const commitDuration = maxEVMuint.sub(new web3.utils.BN(blockTimestamp)).add(new web3.utils.BN('1',10));
 
       try {
         await plcr.startPoll('50', commitDuration, '0');
@@ -50,10 +49,10 @@ contract('PLCRVoting', () => {
 
     it('should revert if (block timestamp + _commitDuration) plus provided _revealDuration is greater than 2^256-1', async () => {
       // getting the maximum of uint and storing in maxEVMuint
-      const maxEVMuint = new BN('2').pow('256').minus('1');
+      const maxEVMuint = new web3.utils.BN('2',10).pow(new web3.utils.BN(256)).sub(new web3.utils.BN('1',10));
       const blockTimestamp = await utils.getBlockTimestamp();
       // setting revealDuration to block macEVMuint - blockTimestamp
-      const revealDuration = maxEVMuint.minus(blockTimestamp).plus('1');
+      const revealDuration = maxEVMuint.sub(new web3.utils.BN(blockTimestamp)).add(new web3.utils.BN('1',10));
 
       try {
         await plcr.startPoll('50', '0', revealDuration);

@@ -6,7 +6,6 @@ const PLCRFactory = artifacts.require('./PLCRFactory.sol');
 const EIP20 = artifacts.require('./PLCRToken.sol');
 
 const utils = require('./utils.js');
-const BN = require('bignumber.js');
 
 contract('PLCRVoting', (accounts) => {
   describe('Function: getNumPassingTokens', () => {
@@ -36,10 +35,10 @@ contract('PLCRVoting', (accounts) => {
         options.vote = '1';
 
         const pollID = await utils.startPollAndCommitVote(options, plcr);
-        await utils.increaseTime(new BN(options.commitPeriod, 10).plus(new BN('1', 10)).toNumber(10));
+        await utils.increaseTime(new web3.utils.BN(options.commitPeriod, 10).add(new web3.utils.BN('1', 10)).toNumber(10));
 
         await utils.as(options.actor, plcr.revealVote, pollID, options.vote, options.salt);
-        await utils.increaseTime(new BN(options.revealPeriod, 10).plus(new BN('1', 10)).toNumber(10));
+        await utils.increaseTime(new web3.utils.BN(options.revealPeriod, 10).add(new web3.utils.BN('1', 10)).toNumber(10));
 
         const passingTokens = await plcr.getNumPassingTokens.call(options.actor, pollID);
 
@@ -53,10 +52,10 @@ contract('PLCRVoting', (accounts) => {
         options.vote = '0';
 
         const pollID = await utils.startPollAndCommitVote(options, plcr);
-        await utils.increaseTime(new BN(options.commitPeriod, 10).plus(new BN('1', 10)).toNumber(10));
+        await utils.increaseTime(new web3.utils.BN(options.commitPeriod, 10).add(new web3.utils.BN('1', 10)).toNumber(10));
 
         await utils.as(options.actor, plcr.revealVote, pollID, options.vote, options.salt);
-        await utils.increaseTime(new BN(options.revealPeriod, 10).plus(new BN('1', 10)).toNumber(10));
+        await utils.increaseTime(new web3.utils.BN(options.revealPeriod, 10).add(new web3.utils.BN('1', 10)).toNumber(10));
 
         const passingTokens = await plcr.getNumPassingTokens.call(options.actor, pollID);
 
@@ -92,16 +91,16 @@ contract('PLCRVoting', (accounts) => {
       const pollID = await utils.startPollAndCommitVote(options, plcr);
 
       // end the poll, but do not reveal
-      const increase = new BN(options.commitPeriod, 10)
-        .plus(new BN(options.revealPeriod, 10))
-        .plus('1');
+      const increase = new web3.utils.BN(options.commitPeriod, 10)
+        .add(new web3.utils.BN(options.revealPeriod, 10))
+        .add(new web3.utils.BN('1', 10));
       await utils.increaseTime(increase.toNumber(10));
 
       // make sure the poll has ended
       const ended = plcr.pollEnded.call(pollID);
       assert(ended, 'poll has not ended!');
 
-      // call
+      // call 
       try {
         await plcr.getNumPassingTokens.call(options.actor, pollID);
       } catch (err) {

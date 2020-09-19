@@ -6,7 +6,6 @@ const PLCRFactory = artifacts.require('./PLCRFactory.sol');
 const EIP20 = artifacts.require('./PLCRToken.sol');
 
 const utils = require('./utils.js');
-const BN = require('bignumber.js');
 
 contract('PLCRVoting', (accounts) => {
   describe('Function: revealVotes', () => {
@@ -38,7 +37,7 @@ contract('PLCRVoting', (accounts) => {
       const votes = [options.vote];
       const salts = [options.salt];
 
-      await utils.increaseTime(new BN(options.commitPeriod, 10).plus(new BN('1', 10)).toNumber(10));
+      await utils.increaseTime(new web3.utils.BN(options.commitPeriod, 10).add(new web3.utils.BN('1', 10)).toNumber(10));
       await utils.as(options.actor, plcr.revealVotes,
         pollIDs, votes, salts);
 
@@ -64,7 +63,7 @@ contract('PLCRVoting', (accounts) => {
       const votes = [options1.vote, options2.vote];
       const salts = [options1.salt, options2.salt];
 
-      await utils.increaseTime(new BN(options1.commitPeriod, 10).plus(new BN('1', 10)).toNumber(10));
+      await utils.increaseTime(new web3.utils.BN(options1.commitPeriod, 10).add(new web3.utils.BN('1', 10)).toNumber(10));
       await utils.as(options1.actor, plcr.revealVotes,
         pollIDs, votes, salts);
 

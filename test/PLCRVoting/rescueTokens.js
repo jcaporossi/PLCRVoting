@@ -6,7 +6,6 @@ const PLCRFactory = artifacts.require('./PLCRFactory.sol');
 const EIP20 = artifacts.require('./PLCRToken.sol');
 
 const utils = require('./utils.js');
-const BN = require('bignumber.js');
 
 contract('PLCRVoting', (accounts) => {
   describe('Function: rescueTokens', () => {

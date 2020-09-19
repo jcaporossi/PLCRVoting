@@ -6,7 +6,6 @@ const PLCRFactory = artifacts.require('./PLCRFactory.sol');
 const EIP20 = artifacts.require('./PLCRToken.sol');
 
 const utils = require('./utils.js');
-const BN = require('bignumber.js');
 
 contract('PLCRVoting', (accounts) => {
   describe('Function: isPassed', () => {
@@ -36,10 +35,10 @@ contract('PLCRVoting', (accounts) => {
 
       // make a poll and commit a vote for
       const pollID = await utils.startPollAndCommitVote(options, plcr);
-      await utils.increaseTime(new BN(options.commitPeriod, 10).plus(new BN('1', 10)).toNumber(10));
+      await utils.increaseTime(new web3.utils.BN(options.commitPeriod, 10).add(new web3.utils.BN('1', 10)).toNumber(10));
 
       await utils.as(options.actor, plcr.revealVote, pollID, options.vote, options.salt);
-      await utils.increaseTime(new BN(options.revealPeriod, 10).plus(new BN('1', 10)).toNumber(10));
+      await utils.increaseTime(new web3.utils.BN(options.revealPeriod, 10).add(new web3.utils.BN('1', 10)).toNumber(10));
 
       const isPassed = await plcr.isPassed.call(pollID);
       assert.strictEqual(isPassed, true, 'isPassed should have returned true for a passing poll');
@@ -64,13 +63,13 @@ contract('PLCRVoting', (accounts) => {
       // commit for each voter
       await utils.commitAs(pollID, aliceOptions, plcr);
       await utils.commitAs(pollID, bobOptions, plcr);
-      await utils.increaseTime(new BN(options.commitPeriod, 10).plus(new BN('1', 10)).toNumber(10));
+      await utils.increaseTime(new web3.utils.BN(options.commitPeriod, 10).add(new web3.utils.BN('1', 10)).toNumber(10));
 
       // reveal for each voter
       await utils.as(aliceOptions.actor, plcr.revealVote, pollID, aliceOptions.vote,
         aliceOptions.salt);
       await utils.as(bobOptions.actor, plcr.revealVote, pollID, bobOptions.vote, bobOptions.salt);
-      await utils.increaseTime(new BN(options.revealPeriod, 10).plus(new BN('1', 10)).toNumber(10));
+      await utils.increaseTime(new web3.utils.BN(options.revealPeriod, 10).add(new web3.utils.BN('1', 10)).toNumber(10));
 
       // should be 1-1 tie
       const isPassed = await plcr.isPassed.call(pollID);
@@ -87,9 +86,9 @@ contract('PLCRVoting', (accounts) => {
       const pollID = utils.getPollIDFromReceipt(receipt);
 
       // go to the end of the time period
-      const increase = new BN(options.commitPeriod, 10)
-        .plus(new BN(options.revealPeriod, 10))
-        .plus('1');
+      const increase = new web3.utils.BN(options.commitPeriod, 10)
+        .add(new web3.utils.BN(options.revealPeriod, 10))
+        .add(new web3.utils.BN('1', 10));
       await utils.increaseTime(increase.toNumber(10));
 
       const isPassed = await plcr.isPassed.call(pollID);
@@ -104,10 +103,10 @@ contract('PLCRVoting', (accounts) => {
 
       // make a poll and commit a vote against
       const pollID = await utils.startPollAndCommitVote(options, plcr);
-      await utils.increaseTime(new BN(options.commitPeriod, 10).plus(new BN('1', 10)).toNumber(10));
+      await utils.increaseTime(new web3.utils.BN(options.commitPeriod, 10).add(new web3.utils.BN('1', 10)).toNumber(10));
 
       await utils.as(options.actor, plcr.revealVote, pollID, options.vote, options.salt);
-      await utils.increaseTime(new BN(options.revealPeriod, 10).plus(new BN('1', 10)).toNumber(10));
+      await utils.increaseTime(new web3.utils.BN(options.revealPeriod, 10).add(new web3.utils.BN('1', 10)).toNumber(10));
 
       const isPassed = await plcr.isPassed.call(pollID);
       assert.strictEqual(isPassed, false, 'isPassed should have returned false for a poll that did not pass');

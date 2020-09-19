@@ -6,7 +6,6 @@ const PLCRFactory = artifacts.require('./PLCRFactory.sol');
 const EIP20 = artifacts.require('./PLCRToken.sol');
 
 const utils = require('./utils.js');
-const BN = require('bignumber.js');
 
 contract('PLCRVoting', (accounts) => {
   describe('Function: didReveal', () => {
@@ -36,7 +35,7 @@ contract('PLCRVoting', (accounts) => {
       // alice starts poll & commits
       const pollID = await utils.startPollAndCommitVote(options, plcr);
 
-      await utils.increaseTime(new BN(options.commitPeriod, 10).plus(new BN('1', 10)).toNumber(10));
+      await utils.increaseTime(new web3.utils.BN(options.commitPeriod, 10).add(new web3.utils.BN('1', 10)).toNumber(10));
 
       // alice reveals
       await utils.as(options.actor, plcr.revealVote, pollID, options.vote, options.salt);

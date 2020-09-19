@@ -6,7 +6,6 @@ const PLCRFactory = artifacts.require('./PLCRFactory.sol');
 const EIP20 = artifacts.require('./PLCRToken.sol');
 
 const utils = require('./utils.js');
-const BN = require('bignumber.js');
 
 contract('PLCRVoting', (accounts) => {
   describe('Function: getTotalNumberOfTokensForWinningOption', () => {
@@ -36,10 +35,10 @@ contract('PLCRVoting', (accounts) => {
 
       // make a poll and commit and reveal a "for" vote
       const pollID = await utils.startPollAndCommitVote(options, plcr);
-      await utils.increaseTime(new BN(options.commitPeriod, 10).plus(new BN('1', 10)).toNumber(10));
+      await utils.increaseTime(new web3.utils.BN(options.commitPeriod, 10).add(new web3.utils.BN('1', 10)).toNumber(10));
 
       await utils.as(options.actor, plcr.revealVote, pollID, options.vote, options.salt);
-      await utils.increaseTime(new BN(options.revealPeriod, 10).plus(new BN('1', 10)).toNumber(10));
+      await utils.increaseTime(new web3.utils.BN(options.revealPeriod, 10).add(new web3.utils.BN('1', 10)).toNumber(10));
 
       // make sure poll passed
       const isPassed = await plcr.isPassed.call(pollID);
@@ -64,10 +63,10 @@ contract('PLCRVoting', (accounts) => {
 
       // make a poll and commit and reveal an "against" vote
       const pollID = await utils.startPollAndCommitVote(options, plcr);
-      await utils.increaseTime(new BN(options.commitPeriod, 10).plus(new BN('1', 10)).toNumber(10));
+      await utils.increaseTime(new web3.utils.BN(options.commitPeriod, 10).add(new web3.utils.BN('1', 10)).toNumber(10));
 
       await utils.as(options.actor, plcr.revealVote, pollID, options.vote, options.salt);
-      await utils.increaseTime(new BN(options.revealPeriod, 10).plus(new BN('1', 10)).toNumber(10));
+      await utils.increaseTime(new web3.utils.BN(options.revealPeriod, 10).add(new web3.utils.BN('1', 10)).toNumber(10));
 
       // make sure poll did not pass
       const isPassed = await plcr.isPassed.call(pollID);
