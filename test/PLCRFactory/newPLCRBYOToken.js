@@ -21,7 +21,7 @@ contract('PLCRFactory', () => {
         decimals: '2',
         symbol: 'TST',
       };
-      const token = await EIP20.new(tokenParams.name, 
+      const token = await EIP20.new(tokenParams.supply, tokenParams.name, 
         tokenParams.symbol);
 
 

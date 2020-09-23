@@ -46,9 +46,8 @@ contract PLCRFactory {
     string memory _symbol
   ) public returns (PLCRVoting) {
     // Create a new token and give all the tokens to the PLCR creator
-    PLCRToken token = new PLCRToken(_name, _symbol);
-    token.mint(msg.sender, _supply);
-    //token.transfer(msg.sender, _supply);
+    PLCRToken token = new PLCRToken(_supply, _name, _symbol);
+    token.transfer(msg.sender, _supply);
 
     // Create and initialize a new PLCR contract
     PLCRVoting plcr = PLCRVoting(proxyFactory.createProxy(address(canonizedPLCR), ""));

@@ -28,7 +28,7 @@ contract('PLCRFactory', () => {
       const token = receipt.logs[0].args.token;
       const plcr = await PLCRVoting.at(receipt.logs[0].args.plcr);
 
-      const ctoken = await EIP20.new('TOTO','TOT');
+      const ctoken = await EIP20.new(2000, 'TOTO','TOT');
       await canonizedPLCR.init(ctoken.address);
       console.log("ctoken address = "+ctoken.address);
       //await canonizedPLCR.init('2666');
