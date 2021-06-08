@@ -2,7 +2,7 @@ pragma solidity ^0.8.0;
 
 import "./PLCRVoting.sol";
 import "./ProxyFactory.sol";
-import "./PLCRToken.sol";
+import "./Token.sol";
 
 contract PLCRFactory {
 
@@ -45,7 +45,7 @@ contract PLCRFactory {
     string memory _symbol
   ) public returns (PLCRVoting) {
     // Create a new token and give all the tokens to the PLCR creator
-    PLCRToken token = new PLCRToken(_supply, _name, _symbol);
+    Token token = new Token(_supply, _name, _symbol);
     token.transfer(msg.sender, _supply);
 
     // Create and initialize a new PLCR contract
