@@ -1,13 +1,12 @@
 pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "./PLCRVoting.sol";
 import "./ProxyFactory.sol";
 import "./PLCRToken.sol";
 
 contract PLCRFactory {
 
-  event newPLCR(address creator, ERC20 token, PLCRVoting plcr);
+  event newPLCR(address creator, address token, PLCRVoting plcr);
 
   ProxyFactory public proxyFactory;
   PLCRVoting public canonizedPLCR;
@@ -23,7 +22,7 @@ contract PLCRFactory {
   supplied by the user.
   @param _token an EIP20 token to be consumed by the new PLCR contract
   */
-  function newPLCRBYOToken(ERC20 _token) public returns (PLCRVoting) {
+  function newPLCRBYOToken(address _token) public returns (PLCRVoting) {
     PLCRVoting plcr = PLCRVoting(proxyFactory.createProxy(address(canonizedPLCR), ""));
     plcr.init(address(_token));
 
@@ -53,7 +52,7 @@ contract PLCRFactory {
     PLCRVoting plcr = PLCRVoting(proxyFactory.createProxy(address(canonizedPLCR), ""));
     plcr.init(address(token));
 
-    emit newPLCR(msg.sender, token, plcr);
+    emit newPLCR(msg.sender, address(token), plcr);
 
     return plcr;
   }
