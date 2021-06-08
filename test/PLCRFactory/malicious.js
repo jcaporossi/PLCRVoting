@@ -1,9 +1,9 @@
 /* eslint-env mocha */
 /* global contract assert artifacts */
 
-const PLCRFactory = artifacts.require('./PLCRFactory.sol');
-const PLCRVoting = artifacts.require('./PLCRVoting.sol');
-const EIP20 = artifacts.require('./PLCRToken.sol');
+const PLCRFactory = artifacts.require('./PLCRFactory');
+const PLCRVoting = artifacts.require('./PLCRVoting');
+const EIP20 = artifacts.require('./Token');
 
 contract('PLCRFactory', () => {
   describe('Malicious actions', () => {
@@ -20,7 +20,6 @@ contract('PLCRFactory', () => {
       const tokenParams = {
         supply: '1000',
         name: 'TEST',
-        decimals: '2',
         symbol: 'TST',
       };
       const receipt = await plcrFactory.newPLCRWithToken(tokenParams.supply, tokenParams.name, tokenParams.symbol);

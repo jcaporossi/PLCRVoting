@@ -1,8 +1,8 @@
 /* eslint-env mocha */
 /* global contract assert artifacts */
 
-const PLCRVoting = artifacts.require('./PLCRVoting.sol');
-const PLCRFactory = artifacts.require('./PLCRFactory.sol');
+const PLCRVoting = artifacts.require('./PLCRVoting');
+const PLCRFactory = artifacts.require('./PLCRFactory');
 
 contract('PLCRVoting', () => {
   describe('Function: INITIAL_POLL_NONCE', () => {

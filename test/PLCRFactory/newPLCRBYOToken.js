@@ -1,9 +1,9 @@
 /* eslint-env mocha */
 /* global contract assert artifacts */
 
-const PLCRFactory = artifacts.require('./PLCRFactory.sol');
-const PLCRVoting = artifacts.require('./PLCRVoting.sol');
-const EIP20 = artifacts.require('./PLCRToken.sol');
+const PLCRFactory = artifacts.require('./PLCRFactory');
+const PLCRVoting = artifacts.require('./PLCRVoting');
+const EIP20 = artifacts.require('./Token');
 
 contract('PLCRFactory', () => {
   describe('Function: newPLCRBYOToken', () => {
@@ -18,7 +18,6 @@ contract('PLCRFactory', () => {
       const tokenParams = {
         supply: '1000',
         name: 'TEST',
-        decimals: '2',
         symbol: 'TST',
       };
       const token = await EIP20.new(tokenParams.supply, tokenParams.name, 

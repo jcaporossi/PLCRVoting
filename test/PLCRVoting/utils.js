@@ -1,7 +1,7 @@
 /* global artifacts */
 
-const EIP20 = artifacts.require('./PLCRToken.sol');
-const PLCRVoting = artifacts.require('./PLCRVoting.sol');
+const EIP20 = artifacts.require('./Token');
+const PLCRVoting = artifacts.require('./PLCRVoting');
 
 const abi = require('ethereumjs-abi');
 const HttpProvider = require('ethjs-provider-http');
