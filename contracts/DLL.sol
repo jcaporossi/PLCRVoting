@@ -1,23 +1,23 @@
-pragma solidity ^0.6.0;
+pragma solidity^0.8.0;
 
 library DLL {
 
-  uint constant NULL_NODE_ID = 0;
+  uint256 constant NULL_NODE_ID = 0;
 
   struct Node {
-    uint next;
-    uint prev;
+    uint256 next;
+    uint256 prev;
   }
 
   struct Data {
-    mapping(uint => Node) dll;
+    mapping(uint256 => Node) dll;
   }
 
   function isEmpty(Data storage self) public view returns (bool) {
     return getStart(self) == NULL_NODE_ID;
   }
 
-  function contains(Data storage self, uint _curr) public view returns (bool) {
+  function contains(Data storage self, uint256 _curr) public view returns (bool) {
     if (isEmpty(self) || _curr == NULL_NODE_ID) {
       return false;
     } 
@@ -27,19 +27,19 @@ library DLL {
     return isSingleNode || !isNullNode;
   }
 
-  function getNext(Data storage self, uint _curr) public view returns (uint) {
+  function getNext(Data storage self, uint256 _curr) public view returns (uint256) {
     return self.dll[_curr].next;
   }
 
-  function getPrev(Data storage self, uint _curr) public view returns (uint) {
+  function getPrev(Data storage self, uint256 _curr) public view returns (uint256) {
     return self.dll[_curr].prev;
   }
 
-  function getStart(Data storage self) public view returns (uint) {
+  function getStart(Data storage self) public view returns (uint256) {
     return getNext(self, NULL_NODE_ID);
   }
 
-  function getEnd(Data storage self) public view returns (uint) {
+  function getEnd(Data storage self) public view returns (uint256) {
     return getPrev(self, NULL_NODE_ID);
   }
 
@@ -50,7 +50,7 @@ library DLL {
   @param _curr the id of the new node being inserted
   @param _next the node which _new will be inserted before
   */
-  function insert(Data storage self, uint _prev, uint _curr, uint _next) public {
+  function insert(Data storage self, uint256 _prev, uint256 _curr, uint256 _next) public {
     require(_curr != NULL_NODE_ID);
 
     remove(self, _curr);
@@ -68,13 +68,13 @@ library DLL {
     self.dll[_next].prev = _curr;
   }
 
-  function remove(Data storage self, uint _curr) public {
+  function remove(Data storage self, uint256 _curr) public {
     if (!contains(self, _curr)) {
       return;
     }
 
-    uint next = getNext(self, _curr);
-    uint prev = getPrev(self, _curr);
+    uint256 next = getNext(self, _curr);
+    uint256 prev = getPrev(self, _curr);
 
     self.dll[next].prev = prev;
     self.dll[prev].next = next;

@@ -32,7 +32,7 @@
 * 
 ***/
 
-pragma solidity ^0.6.0;
+pragma solidity ^0.8.0;
 
 /* solhint-disable no-inline-assembly, indent, state-visibility, avoid-low-level-calls */
 

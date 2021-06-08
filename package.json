@@ -1,7 +1,7 @@
 {
   "name": "plcrvoting",
   "version": "1.0.0",
-  "description": "",
+  "description": "Partial Lock Commit Reveal voting ",
   "main": "truffle-config.js",
   "directories": {
     "test": "test"
@@ -9,22 +9,13 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/jcaporossi/PLCRVoting.git"
-  },
-  "author": "",
+  "author": "J. Caporossi",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/jcaporossi/PLCRVoting/issues"
   },
   "homepage": "https://github.com/jcaporossi/PLCRVoting#readme",
   "dependencies": {
-    "@openzeppelin/contracts": "^3.2.0",
-    "bignumber.js": "^9.0.0",
-    "ethereumjs-abi": "^0.6.8",
-    "ethjs-provider-http": "^0.1.6",
-    "ethjs-query": "^0.3.8",
-    "ethjs-rpc": "^0.2.0"
+    "@openzeppelin/contracts": "^4.1.0"
   }
 }

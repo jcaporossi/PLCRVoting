@@ -1,4 +1,4 @@
-pragma solidity ^0.6.0;
+pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "./PLCRVoting.sol";
@@ -13,7 +13,7 @@ contract PLCRFactory {
   PLCRVoting public canonizedPLCR;
 
   /// @dev constructor deploys a new canonical PLCRVoting contract and a proxyFactory.
-  constructor() public {
+  constructor() {
     canonizedPLCR = new PLCRVoting();
     proxyFactory = new ProxyFactory();
   }
